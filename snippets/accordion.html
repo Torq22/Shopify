@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .accordion-item {
+      margin-bottom: 10px;
+    }
+    
+    .accordion-item .accordion-button {
+      cursor: pointer;
+      background-color: #f5f5f5;
+      color: #333;
+      padding: 10px;
+      border: none;
+      outline: none;
+      width: 100%;
+      text-align: left;
+    }
+    
+    .accordion-item .firstAccordionContent {
+      padding: 10px;
+      display: none;
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+    #firstAccordionOpen
+    firstAccordionContent
+  <div class="accordion-item">
+    <button class="accordion-button firstAccordionOpen">Accordion 1</button>
+    <div class="firstAccordionContent">
+      <p>Content for Accordion 1</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-button">Accordion 2</button>
+    <div class="firstAccordionContent">
+      <p>Content for Accordion 2</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-button">Accordion 3</button>
+    <div class="firstAccordionContent">
+      <p>Content for Accordion 3</p>
+    </div>
+  </div>
+
+  <script>
+    var accordionButtons = document.querySelectorAll('.accordion-button');
+
+    function toggleAccordion() {
+      var accordionContent = this.nextElementSibling;
+      var isExpanded = accordionContent.style.display === 'block';
+
+      // Close all accordions
+      closeAllAccordions();
+
+      // Toggle the clicked accordion
+      if (!isExpanded) {
+        accordionContent.style.display = 'block';
+      }
+    }
+
+    function closeAllAccordions() {
+      var accordionContents = document.querySelectorAll('.firstAccordionContent');
+      accordionContents.forEach(function(content) {
+        content.style.display = 'none';
+      });
+    }
+
+    accordionButtons.forEach(function(button) {
+      button.addEventListener('click', toggleAccordion);
+    });
+  </script>
+</body>
+</html>

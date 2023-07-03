@@ -1,0 +1,83 @@
+<div class="product_category_filter"> Hello
+    <div class="single_category">
+     <nav class="category__inline-menu">
+       <ul class="list-menu list-menu--inline" role="list">
+         {% for block in section.blocks %}
+            {%- case block.type -%}
+              {% when "category_subcategory" %} 
+                {%- for link in block.settings.add_filter_category.links -%}
+                    <li>
+                    {%- if link.links != blank -%}
+                        <add-category>
+                            <details id="Details-add-category-{{ forloop.index }}">
+                                <summary class="category__menu-item category_list-menu__item link focus-inset">
+                                    <span {%- if link.child_active %} class="category__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+                                    {% render 'icon-caret' %}
+                                </summary>
+                                <ul id="categoryMenu-MenuList-{{ forloop.index }}" class="category__submenu " role="list" tabindex="-1">
+                                {%- for childlink in link.links -%}
+                                    <li>
+                                    {%- if childlink.links == blank -%}
+                                        <a href="{{ childlink.url }}" class="category__menu-item category_list-menu__item {% if childlink.current %} category_list-menu__item--active{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
+                                        {{ childlink.title | escape }}
+                                        </a>
+                                    {%- else -%}
+                                        <details id="Details-categorySubMenu-{{ forloop.index }}">
+                                        <summary class="category__menu-item">
+                                            <span>{{ childlink.title | escape }}</span>
+                                            {% render 'icon-caret' %}
+                                        </summary>
+                                        <ul id="categoryMenu-SubMenuList-{{ forloop.index }}" class="category__submenu list-menu motion-reduce">
+                                            {%- for grandchildlink in childlink.links -%}
+                                            <li>
+                                                <a href="{{ grandchildlink.url }}" class="category__menu-item category_list-menu__item {% if grandchildlink.current %} category_list-menu__item--active{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
+                                                {{ grandchildlink.title | escape }}
+                                                </a>
+                                            </li>
+                                            {%- endfor -%}
+                                        </ul>
+                                        </details>
+                                    {%- endif -%}
+                                    </li>
+                                {%- endfor -%}
+                                </ul>
+                            </details>
+                        </add-category>
+                    {%- else -%}
+                        <a href="{{ link.url }}" class="category__menu-item category_list-menu__item link link--text focus-inset"{% if link.current %} aria-current="page"{% endif %}>
+                        <span {%- if link.current %} class="category__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+                        </a>
+                    {%- endif -%}
+                    </li>
+                {%- endfor -%}
+            {% endcase %}
+         {% endfor %}
+       </ul>
+     </nav>
+    </div>
+ </div>
+
+ {% schema %}
+    {
+        "name": "Add category",
+        "class": "section",
+        "blocks": [
+            {
+                "name": "Add Category filter",
+                "type": "category_subcategory",
+                "settings": [
+                        {
+                            "type": "link_list",
+                            "id": "add_filter_category",
+                            "label": "Add category menu"
+                        }
+                    ]
+                }
+            ],
+        "presets": [
+            {
+                "name": "Add category"
+            }
+        ]
+        }
+ {% endschema %}
